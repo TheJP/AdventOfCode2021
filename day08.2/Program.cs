@@ -63,24 +63,29 @@ foreach (var line in input)
         }
     }
 
-    for (char a = 'a'; a <= 'g'; ++a)
+    var changed = true;
+    while (changed)
     {
-        var fromA = assignments.Where(pair => pair.Item1 == a);
-        if (fromA.Count() == 1)
+        changed = false;
+        for (char a = 'a'; a <= 'g'; ++a)
         {
-            var charFromA = fromA.First().Item2;
-            for (char b = 'a'; b <= 'g'; ++b)
+            var fromA = assignments.Where(pair => pair.Item1 == a);
+            if (fromA.Count() == 1)
             {
-                if (b != a) assignments.Remove((b, charFromA));
+                var charFromA = fromA.First().Item2;
+                for (char b = 'a'; b <= 'g'; ++b)
+                {
+                    if (b != a) changed |= assignments.Remove((b, charFromA));
+                }
             }
-        }
-        var toA = assignments.Where(pair => pair.Item2 == a);
-        if (toA.Count() == 1)
-        {
-            var charToA = toA.First().Item1;
-            for (char b = 'a'; b <= 'g'; ++b)
+            var toA = assignments.Where(pair => pair.Item2 == a);
+            if (toA.Count() == 1)
             {
-                if (b != a) assignments.Remove((charToA, b));
+                var charToA = toA.First().Item1;
+                for (char b = 'a'; b <= 'g'; ++b)
+                {
+                    if (b != a) changed |= assignments.Remove((charToA, b));
+                }
             }
         }
     }
