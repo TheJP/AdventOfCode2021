@@ -50,3 +50,9 @@ void PrintPoints()
 
 Fold(folds.First());
 Console.WriteLine($"Task 1: {points.Distinct().Count()}");
+
+foreach (var fold in folds.Skip(1))
+{
+    Fold(fold);
+}
+PrintPoints();
