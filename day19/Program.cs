@@ -103,3 +103,16 @@ foreach (var beacon in globalPositions.Where(p => p != null).SelectMany(p => p))
     beaconPositions.Add(beacon);
 }
 Console.WriteLine($"Task 1: {beaconPositions.Count}");
+
+int max = 0;
+for (i = 0; i < transformations.Length; ++i)
+{
+    var position = transformations[i] * Vector.Zeros; // Global position of scanner i.
+    for (int j = 0; j < transformations.Length; ++j)
+    {
+        var distance = position - (transformations[j] * Vector.Zeros);
+        var manhatten = Math.Abs(distance.X) + Math.Abs(distance.Y) + Math.Abs(distance.Z);
+        max = Math.Max(max, manhatten);
+    }
+}
+Console.WriteLine($"Task 2: {max}");
